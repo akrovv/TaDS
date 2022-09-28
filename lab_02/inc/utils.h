@@ -5,12 +5,19 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <ctype.h>
 
 #define STRING_OBJECTS 51
 #define STRING_SPORT 51
 #define STRING_COUNTRY 61
 #define STRING_CAPITAL 41
 #define STRING_MATERIC 37
+#define NUMBER_COUNTRY 300
+
+#define SIGHTSEEING_LEN 14
+#define SIGHT_PARAMS 2
+#define BEACH_PARAMS 4
+#define SPORT_PARAMS 2
 
 typedef struct 
 {
@@ -64,5 +71,6 @@ typedef struct
     long int population;
 } key_travel_t;
 
-#endif
+int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countries, key_travel_t keys[]);
 
+#endif
