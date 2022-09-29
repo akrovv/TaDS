@@ -22,15 +22,36 @@ int main(int argc, char **argv)
     if (read_array_travel_country(f, countries, &len, keys))
         return 1;
 
+    size_t option;
+
+    print_menu();
+
+    if (scanf("%zu", &option) == 1 && option)
+    {
+        switch (option)
+        {
+            case ADD:
+                break;
+            case REMOVE_BY_FIELD:
+                break;
+            case PRINT_SORT_KEY:
+                break;
+            case PRINT_SORTED_TABLE_BY_FIELD:
+                selection_sort_by_fields(countries, len);
+                print_table(countries, len);
+                break;
+            case PRINT_SORTED_TABLE_BY_KEY:
+                break;
+        }
+    }
+
+
     // selection_sort_by_field(countries, len);
     //selection_sort_by_keys(keys, len);
 
-    merge_sort_by_fields(countries, len);
+    // merge_sort_by_fields(countries, 0, len - 1);
+    // merge_sort_by_keys(keys, 0, len - 1);
 
-    for (size_t i = 0; i < len; i++)
-    {
-        printf("%s %ld\n", countries[i].main_data_t.name_country, countries[i].main_data_t.population);
-    }
 
     return EXIT_SUCCESS;
 }

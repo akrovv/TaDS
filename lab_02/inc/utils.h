@@ -19,6 +19,15 @@
 #define BEACH_PARAMS 4
 #define SPORT_PARAMS 2
 
+typedef enum
+{
+    ADD = 1,
+    REMOVE_BY_FIELD,
+    PRINT_SORT_KEY,
+    PRINT_SORTED_TABLE_BY_FIELD,
+    PRINT_SORTED_TABLE_BY_KEY
+} optin_t;
+
 typedef struct 
 {
     unsigned int number_objects;
@@ -70,7 +79,5 @@ typedef struct
     int index;
     long int population;
 } key_travel_t;
-
-int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countries, key_travel_t keys[]);
 
 #endif

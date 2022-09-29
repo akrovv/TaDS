@@ -112,8 +112,8 @@ int split_str_by_rule(char str[], travel_t *country)
             else if (i == 1 && strlen(type_travel) < STRING_OBJECTS)
             {
                 i++;
-                text = delete_spaces(type_travel);
-                strcpy(country->tourism.kid_tourism.sightseeing.name_object, text);   
+                //text = delete_spaces(type_travel);
+                strcpy(country->tourism.kid_tourism.sightseeing.name_object, type_travel);   
             }
             else
                 return 1;
@@ -186,8 +186,9 @@ int split_str_by_rule(char str[], travel_t *country)
             if (i == 0 && strlen(type_travel) < STRING_SPORT)
             {
                 i++;
-                text = delete_spaces(type_travel);
-                strcpy(country->tourism.kid_tourism.sport.kind_sport, text); 
+                //text = delete_spaces(type_travel);
+            
+                strcpy(country->tourism.kid_tourism.sport.kind_sport, type_travel); 
             }
             else if (i == 1)
             {
@@ -254,4 +255,72 @@ int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countr
     *size_countries = i;
 
     return EXIT_SUCCESS;
+}
+
+void print_basic_info(travel_t *country)
+{
+    printf("Name of the country: %s\n", country->main_data_t.name_country);
+    printf("Capital of the country: %s\n", country->main_data_t.capital);
+    printf("Materic of the country: %s\n", country->main_data_t.materic);
+    printf("Population of the country: %ld\n", country->main_data_t.population);
+}
+
+void print_travel_sightseeing(sightseeing_t *country)
+{
+    printf("Number of objects: %u\n", country->number_objects);
+    printf("Name of the object: %s\n", country->name_object);
+}
+
+void print_travel_beach(beach_t *country)
+{
+    printf("Main season: %hu\n", country->main_season);
+    printf("Air temperature: %d°C\n", country->air_temperature);
+    printf("Water temperature: %d°C\n", country->water_temperature);
+    printf("Time flying: %huh\n", country->time_flying);
+}
+
+void print_travel_sport(sport_t *country)
+{
+    printf("Kind sport: %s\n", country->kind_sport);
+    printf("Min count price: %lu\n", country->min_count_price);
+}
+
+void print_table(travel_t countries[], size_t len)
+{
+    for (size_t i = 0; i < len; i++)
+    {
+        print_basic_info(&countries[i]);
+        if (countries[i].tourism.tourism_sightseeing)
+        {
+            printf("Type of the travel: Экскурсионный\n");
+            print_travel_sightseeing(&countries[i].tourism.kid_tourism.sightseeing);
+        }
+        else if (countries[i].tourism.tourism_beach)
+        {
+            printf("Type of the travel: Спортивный\n");
+            print_travel_beach(&countries[i].tourism.kid_tourism.beach);
+        }
+        else if (countries[i].tourism.tourism_sport)
+        {
+            printf("Type of the travel: Пляжный\n");
+            print_travel_sport(&countries[i].tourism.kid_tourism.sport);
+        }
+        printf("----------\n");
+    }
+}
+
+void print_menu(void)
+{
+    printf("----------MENU---------                ---------------Описание--------------\n"
+        
+           "1 - Добавить страну.                  При добавление стран есть ряд ограничений:\n"
+           "2 - Удалить страну.                     - Название стран небольше 30 символов\n"
+           "3 - Отсортировать все страны(по ключу). - Название столиц небольше 20 символов\n"
+           "4 - Отсортировать все страны.           - Название материков(только Европа,\n"
+           "5 - Оценка Эффетивности                   Северная или Южная Америка, Азия,\n"
+           "                                          Океания) ввод должен соотвествовать.\n"
+           "                                        - Название типов туризма только 3 вида\n"
+           "                                           Экскурсионный,Пляжный,Спортивный\n"
+           "                                        - Название для ввидов спортивного туризма\n"
+           "                                           небольше 40 элементов\n");
 }
