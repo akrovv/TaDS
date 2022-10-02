@@ -23,7 +23,7 @@ int main(int argc, char **argv)
     size_t len = 0;
     int rc = EXIT_SUCCESS;
 
-    if ((rc = read_array_travel_country(f, countries, &len, keys)))
+    if ((rc = read_array_travel_country(f, countries, &len)))
     {
         print_add_err(rc);
         return rc;
@@ -61,8 +61,10 @@ int main(int argc, char **argv)
                     if (str[strlen(str) - 1] == '\n')
                         str[strlen(str) - 1] = '\0';
                     
-                    if(!(rc = delete_country_by_name(countries, str, &len, keys)))
-                        print_table(countries, len);;
+                    if(!(rc = delete_country_by_name(countries, str, &len)))
+                        print_table(countries, len);
+                    else
+                        printf("Такой страны нет!\n");
                 }
                 else
                     printf("Данные пусты!\n");
@@ -70,6 +72,7 @@ int main(int argc, char **argv)
             case PRINT_SORTED_TABLE_BY_KEY:
                 if (len)
                 {
+                    fill_keys_array(keys, countries, len);
                     merge_sort_by_keys(keys, 0, len - 1);
                     print_table_by_key(countries, keys, len);
                 }

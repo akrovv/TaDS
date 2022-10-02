@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "read_print.h"
 #include "data.h"
+#include "errors.h"
 
 int add_country(travel_t *countries)
 {   
@@ -15,21 +16,9 @@ int add_country(travel_t *countries)
     return split_str_by_rule(str, countries);
 }
 
-int delete_country_by_name(travel_t countries[], char str[], size_t *len, key_travel_t keys[])
+int delete_country_by_name(travel_t countries[], char str[], size_t *len)
 {
     bool is_find = false;
-    for (size_t i = 0; i < *len; i++)
-        if (!strcmp(countries[keys[i].index].main_data_t.name_country, str))
-        {
-            for (size_t j = i; j < *len - 1; j++)
-                keys[j] = keys[j + 1];
-
-            is_find = true;
-            break;
-        }
-
-    if (!is_find)
-        return 1;
 
     for (size_t i = 0; i < *len; i++)
         if (!strcmp(countries[i].main_data_t.name_country, str))
@@ -37,9 +26,13 @@ int delete_country_by_name(travel_t countries[], char str[], size_t *len, key_tr
             for (size_t j = i; j < *len - 1; j++)
                 countries[j] = countries[j + 1];
 
+            is_find = true;
             (*len)--;
             break;
         }
+
+    if (!is_find)
+        return NOT_FIND;
 
     return EXIT_SUCCESS;
 }

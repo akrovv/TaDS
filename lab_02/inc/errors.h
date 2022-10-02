@@ -49,4 +49,6 @@ void print_add_err(int rc);
 #define MAIN_PARAM_ERROR 37
 #define FILE_NOT_FOUND 38
 
+#define NOT_FIND 41
+
 #endif

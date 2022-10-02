@@ -268,7 +268,7 @@ int read_str(FILE *f, travel_t *country, int(*split)(char str[], travel_t *count
     return split(buffer, country);
 }
 
-int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countries, key_travel_t keys[])
+int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countries)
 {
     size_t i = 0;
     int rc = EXIT_SUCCESS;
@@ -278,8 +278,6 @@ int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countr
         if ((rc = read_str(f, &cur, &split_str_by_rule)))
             return rc;
         countries[i] = cur;
-        keys[i].population = cur.main_data_t.population;
-        keys[i].index = i;
         
         i++;
     }
@@ -287,6 +285,15 @@ int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countr
     *size_countries = i;
 
     return rc;
+}
+
+void fill_keys_array(key_travel_t keys[], travel_t countries[], size_t len)
+{
+    for (size_t i = 0; i < len; i++)
+    {
+        keys[i].population = countries[i].main_data_t.population;
+        keys[i].index = i;
+    }
 }
 
 void print_basic_info(travel_t *country)
