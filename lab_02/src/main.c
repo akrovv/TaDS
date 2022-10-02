@@ -4,6 +4,7 @@
 #include "data.h"
 #include "time.h"
 #include "errors.h"
+#include "check.h"
 
 int main(int argc, char **argv)
 {
@@ -103,6 +104,46 @@ int main(int argc, char **argv)
                 else
                     printf("Данные пусты!\n");
                 break;
+            case FIND_COUNTRY:
+                if (len)
+                {
+                    char materics[NUMBER_MATERIC][STRING_MATERIC] = { "Европа",
+                                                                          "Азия",
+                                                                          "Африка",
+                                                                          "Южная Америка",
+                                                                          "Северная Америка",
+                                                                          "Океания"};
+                    printf("0 - Европа\n"
+                               "1 - Азия\n"
+                               "2 - Африка\n"
+                               "3 - Южная Америка\n"
+                               "4 - Северная Америка\n"
+                               "5 - Океания\n");
+                    printf("Выберите материк: ");
+
+                    char buff[8];
+
+                    size_t find_option;
+                    if (scanf("%zu", &find_option) == 1 && (find_option >= 0 && find_option <= 5))
+                    {
+                        char sport[STRING_SPORT + 1];
+                        fgets(buff, 8, stdin);
+                        printf("Введите название вида спорта: ");
+                        if (fgets(sport, STRING_SPORT + 1, stdin) != NULL && strlen(sport) < STRING_SPORT)
+                        {
+                            if (sport[strlen(sport) - 1] == '\n')
+                                    sport[strlen(sport) - 1] = '\0';
+                            if (is_situated_digit_value(sport))
+                                ;
+                            if (!find_country_by_sport(countries, len, materics[find_option], sport))
+                                printf("Ни одной страны не было найдено!\n");
+                        }
+                        else
+                            rc = (strlen(sport) >= STRING_SPORT) ? STRING_SPORT_OVERFLOW : SCAN_ERROR;         
+                    }
+                    else 
+                        rc = SCAN_ERROR;
+                }
         }
         if (rc != EXIT_SUCCESS)
         {

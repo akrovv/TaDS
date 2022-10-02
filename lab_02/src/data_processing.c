@@ -36,3 +36,18 @@ int delete_country_by_name(travel_t countries[], char str[], size_t *len)
 
     return EXIT_SUCCESS;
 }
+
+int find_country_by_sport(travel_t countries[], size_t len, char materic[], char sport[])
+{
+    int is_find = 0;
+    for (size_t i = 0; i < len; i++)
+        if (countries[i].tourism.tourism_sport)
+            if (!strcmp(countries[i].main_data_t.materic, materic) && !strcmp(countries[i].tourism.kid_tourism.sport.kind_sport, sport))
+            {
+                print_basic_info(&countries[i]);
+                print_travel_sport(&countries[i].tourism.kid_tourism.sport);
+                is_find = 1;
+            }
+
+    return is_find;
+}

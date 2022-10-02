@@ -32,7 +32,8 @@ typedef enum
     PRINT_SORTED_TABLE_BY_KEY,
     PRINT_SORTED_TABLE_BY_FIELD,
     PERF_EVALUATION,
-    PRINT_TABLE
+    PRINT_TABLE,
+    FIND_COUNTRY
 } optin_t;
 
 typedef struct 

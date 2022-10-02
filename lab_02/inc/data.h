@@ -5,6 +5,7 @@
 
 int add_country(travel_t *countries);
 int delete_country_by_name(travel_t countries[], char str[], size_t *len);
+int find_country_by_sport(travel_t countries[], size_t len, char materic[], char sport[]);
 
 
 #endif
