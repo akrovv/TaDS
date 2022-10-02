@@ -46,8 +46,8 @@ bool is_incorrect_symb(char str[])
 
 bool is_correct_type_sightseeing(char str[])
 {
-    char name_object[NUMBER_SIGHSEENG][STRING_OBJECTS] = {"Природа", "История", "Искусство"};
-    for (size_t i = 0; i <  NUMBER_SIGHSEENG; i++)
+    char name_object[NUMBER_SIGHSEENG * 2][STRING_OBJECTS] = {"Природа", "История", "Искусство", "природа", "история", "искусство"};
+    for (size_t i = 0; i <  NUMBER_SIGHSEENG * 2; i++)
         if (strcmp(name_object[i], str) == 0)
             return true;
 
@@ -56,8 +56,8 @@ bool is_correct_type_sightseeing(char str[])
 
 bool is_correct_type_sport(char str[])
 {
-    char kind_sport[KIND_SPORT][STRING_SPORT] = {"Горные лыжи", "Серфинг", "Восхождения"};
-    for (size_t i = 0; i <  NUMBER_SIGHSEENG; i++)
+    char kind_sport[KIND_SPORT * 2][STRING_SPORT] = {"Горные лыжи", "Серфинг", "Восхождения", "горные лыжи", "серфинг", "восхождения"};
+    for (size_t i = 0; i <  NUMBER_SIGHSEENG * 2; i++)
         if (strcmp(kind_sport[i], str) == 0)
             return true;
 
