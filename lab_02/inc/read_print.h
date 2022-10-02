@@ -6,6 +6,7 @@ int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countr
 int split_str_by_rule(char str[], travel_t *country);
 int read_str(FILE *f, travel_t *country, int(*split)(char str[], travel_t *country));
 void print_table(travel_t countries[], size_t len);
+void print_table_by_key(travel_t countries[], key_travel_t keys[], size_t len);
 void print_basic_info(travel_t *country);
 void print_travel_sightseeing(sightseeing_t *country);
 void print_travel_beach(beach_t *country);

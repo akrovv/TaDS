@@ -9,7 +9,7 @@ CFLAGS := -std=c$(C_VERSION) -Wall -Werror -pedantic -I$(INC_DIR)
 FTESTS_DIR := ./func_tests/scripts
 UTESTS_DIR := ./unit_tests
 
-OBJS_ALL := $(OUT_DIR)/main.o $(OUT_DIR)/stdio.o $(OUT_DIR)/sort.o
+OBJS_ALL := $(OUT_DIR)/main.o $(OUT_DIR)/stdio.o $(OUT_DIR)/sort.o $(OUT_DIR)/data_processing.o $(OUT_DIR)/time.o $(OUT_DIR)/check.o $(OUT_DIR)/error.o
 OBJS_MAIN := $(OUT_DIR)/main.o
 
 app.exe: $(OBJS_MAIN) $(OBJS_ALL)

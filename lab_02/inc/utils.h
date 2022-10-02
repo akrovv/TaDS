@@ -12,9 +12,15 @@
 #define STRING_COUNTRY 61
 #define STRING_CAPITAL 41
 #define STRING_MATERIC 37
+
 #define NUMBER_COUNTRY 300
+#define NUMBER_MATERIC 6
+#define NUMBER_SIGHSEENG 3
+#define KIND_SPORT 3
 
 #define SIGHTSEEING_LEN 14
+
+#define BASE_PARAMS 5
 #define SIGHT_PARAMS 2
 #define BEACH_PARAMS 4
 #define SPORT_PARAMS 2
@@ -23,9 +29,10 @@ typedef enum
 {
     ADD = 1,
     REMOVE_BY_FIELD,
-    PRINT_SORT_KEY,
+    PRINT_SORTED_TABLE_BY_KEY,
     PRINT_SORTED_TABLE_BY_FIELD,
-    PRINT_SORTED_TABLE_BY_KEY
+    PERF_EVALUATION,
+    PRINT_TABLE
 } optin_t;
 
 typedef struct 

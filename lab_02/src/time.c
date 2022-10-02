@@ -1,0 +1,109 @@
+#include "utils.h"
+#include "sorts.h"
+#include "time.h"
+
+#define I_STEP 10000
+#define SIZE 600
+#define REPEAT 14
+
+void make_table(void)
+{
+    printf("+--------+--------+-------------------+-------------------+--------------+--------+\n");
+    printf("| %6s | %6s | %12s | %12s | %12s | %6s |\n", "I", "Размер","Размер 1 эл-та(б)", "Размер массива(б)", "SELECTION", "MERGE");
+    printf("+--------+--------+-------------------+-------------------+--------------+--------+\n");
+}
+
+void make_data(int i, size_t size, size_t count_size_array, size_t one_element, int64_t time_1, int64_t time_2)
+{
+    printf("| %6d | %6zu | %17zu | %17zu | %12" PRId64 " | %6" PRId64 " |\n", i, size, one_element, count_size_array,  time_1, time_2);
+    printf("+--------+--------+-------------------+-------------------+--------------+--------+\n");
+}
+
+void my_cpy_st_travel(travel_t *arr_cp, travel_t *arr_src, size_t n, int repeat)
+{
+    int step = 0;
+    for (size_t i = 0; step < n * repeat; i++)
+    {
+        if (i == n - 1)
+            i = 0;
+        arr_cp[step++] = arr_src[i];
+    }
+}
+
+void my_cpy_st_key(key_travel_t *arr_cp, key_travel_t *arr_src, size_t n, int repeat)
+{
+    int step = 0;
+    for (size_t i = 0; step < n * repeat; i++)
+    {
+        if (i == n - 1)
+            i = 0;
+        arr_cp[step++] = arr_src[i];
+    }
+}
+
+void time_unsorted_arrays(travel_t *countries, size_t n_c, key_travel_t *key, size_t n_k)
+{
+    struct timeval tv_start, tv_stop;
+    int64_t time_b, time_i, elapsed_b_c = 0, elapsed_i_c = 0, elapsed_b_k = 0, elapsed_i_k = 0;
+    printf("\nСравнение selection_sort и merge_sort - простая таблица.\n");
+    make_table();
+
+    travel_t arr_b_c[SIZE];
+    travel_t arr_i_c[SIZE];
+    my_cpy_st_travel(arr_b_c, countries, n_c, REPEAT);
+    my_cpy_st_travel(arr_i_c, countries, n_c, REPEAT);
+
+    for (int i = 0; i <= I_STEP; i++)
+    {
+        gettimeofday(&tv_start, NULL);
+        selection_sort_by_fields(arr_b_c, n_c * REPEAT);
+        gettimeofday(&tv_stop, NULL);
+        time_b = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL + (tv_stop.tv_usec - tv_start.tv_usec);
+        elapsed_b_c += time_b;
+
+        gettimeofday(&tv_start, NULL);
+        merge_sort_by_fields(arr_i_c, 0, n_c * REPEAT - 1);
+        gettimeofday(&tv_stop, NULL);
+
+        time_i = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL + (tv_stop.tv_usec - tv_start.tv_usec);
+        elapsed_i_c += time_i;
+    }
+    elapsed_b_c = elapsed_b_c / (I_STEP - 2.0) * 100.0;
+    elapsed_i_c = elapsed_i_c / (I_STEP - 2.0) * 100.0;
+    make_data(I_STEP, n_c * REPEAT, n_c * REPEAT * sizeof(travel_t), sizeof(travel_t), elapsed_b_c, elapsed_i_c);
+
+    printf("\nСравнение selection_sort и merge_sort  - испол. таблицу ключей\n");
+    make_table();
+
+    key_travel_t arr_b_k[SIZE];
+    key_travel_t arr_i_k[SIZE];
+    my_cpy_st_key(arr_b_k, key, n_k, REPEAT);
+    my_cpy_st_key(arr_i_k, key, n_k, REPEAT);
+
+    for (int i = 0; i <= I_STEP; i++)
+    {
+        gettimeofday(&tv_start, NULL);
+        selection_sort_by_keys(arr_b_k, n_k * REPEAT);
+        gettimeofday(&tv_stop, NULL);
+        time_b = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL + (tv_stop.tv_usec - tv_start.tv_usec);
+        elapsed_b_k += time_b;
+
+        gettimeofday(&tv_start, NULL);
+        merge_sort_by_keys(arr_i_k, 0, n_k * REPEAT - 1);
+        gettimeofday(&tv_stop, NULL);
+
+        time_i = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL + (tv_stop.tv_usec - tv_start.tv_usec);
+        elapsed_i_k += time_i;
+    }
+    elapsed_b_k = elapsed_b_k / (I_STEP - 2.0) * 100.0;
+    elapsed_i_k = elapsed_i_k / (I_STEP - 2.0) * 100.0;
+    make_data(I_STEP, n_k * REPEAT, n_k * REPEAT * sizeof(key_travel_t), sizeof(key_travel_t), elapsed_b_k, elapsed_i_k);
+
+    double fect_memory = (sizeof(key_travel_t) * 100.0) / sizeof(travel_t);
+    double fect_time_b = 100.0 - (elapsed_b_k * 100.0) / elapsed_b_c;
+    double fect_time_i = 100.0 - (elapsed_i_k * 100.0) / elapsed_i_c;
+    printf("Эффективность таблицы ключей: \n");
+    printf("Пaмять - %.1lf от всей таблицы\n", fect_memory);
+    printf("Selection_sort - %.1lf\n", fect_time_b);
+    printf("Merge_sort - %.1lf\n", fect_time_i);
+}
