@@ -9,7 +9,7 @@
 void make_table(void)
 {
     printf("+--------+--------+-------------------+-------------------+--------------+--------+\n");
-    printf("| %6s | %6s | %12s | %12s | %12s | %6s |\n", "I", "Размер","Размер 1 эл-та(б)", "Размер массива(б)", "SELECTION", "MERGE");
+    printf("| %6s | %6s | %12s | %12s | %12s | %6s |\n", "I", "Размер","Размер 1 эл-та(б)", "Размер массива(б)", "BUBLE FLAG", "INSERT");
     printf("+--------+--------+-------------------+-------------------+--------------+--------+\n");
 }
 
@@ -45,7 +45,7 @@ void time_unsorted_arrays(travel_t *countries, size_t n_c, key_travel_t *key, si
 {
     struct timeval tv_start, tv_stop;
     int64_t time_b, time_i, elapsed_b_c = 0, elapsed_i_c = 0, elapsed_b_k = 0, elapsed_i_k = 0;
-    printf("\nСравнение selection_sort и merge_sort - простая таблица.\n");
+    printf("\nСравнение buble_sort и insert - протая таблица.\n");
     make_table();
 
     travel_t arr_b_c[SIZE];
@@ -56,13 +56,13 @@ void time_unsorted_arrays(travel_t *countries, size_t n_c, key_travel_t *key, si
     for (int i = 0; i <= I_STEP; i++)
     {
         gettimeofday(&tv_start, NULL);
-        selection_sort_by_fields(arr_b_c, n_c * REPEAT);
+        buble_sort_flag_table(arr_b_c, n_c * REPEAT);
         gettimeofday(&tv_stop, NULL);
         time_b = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL + (tv_stop.tv_usec - tv_start.tv_usec);
         elapsed_b_c += time_b;
 
         gettimeofday(&tv_start, NULL);
-        merge_sort_by_fields(arr_i_c, 0, n_c * REPEAT - 1);
+        insert_sort_table(arr_i_c, n_c * REPEAT);
         gettimeofday(&tv_stop, NULL);
 
         time_i = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL + (tv_stop.tv_usec - tv_start.tv_usec);
@@ -72,7 +72,7 @@ void time_unsorted_arrays(travel_t *countries, size_t n_c, key_travel_t *key, si
     elapsed_i_c = elapsed_i_c / (I_STEP - 2.0) * 100.0;
     make_data(I_STEP, n_c * REPEAT, n_c * REPEAT * sizeof(travel_t), sizeof(travel_t), elapsed_b_c, elapsed_i_c);
 
-    printf("\nСравнение selection_sort и merge_sort  - испол. таблицу ключей\n");
+    printf("\nСравнение buble_sort и insert  - испол. таблицу ключей\n");
     make_table();
 
     key_travel_t arr_b_k[SIZE];
@@ -83,13 +83,13 @@ void time_unsorted_arrays(travel_t *countries, size_t n_c, key_travel_t *key, si
     for (int i = 0; i <= I_STEP; i++)
     {
         gettimeofday(&tv_start, NULL);
-        selection_sort_by_keys(arr_b_k, n_k * REPEAT);
+        buble_sort_flag_key(arr_b_k, n_k * REPEAT);
         gettimeofday(&tv_stop, NULL);
         time_b = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL + (tv_stop.tv_usec - tv_start.tv_usec);
         elapsed_b_k += time_b;
 
         gettimeofday(&tv_start, NULL);
-        merge_sort_by_keys(arr_i_k, 0, n_k * REPEAT - 1);
+        insert_sort_key(arr_i_k, n_k * REPEAT);
         gettimeofday(&tv_stop, NULL);
 
         time_i = (tv_stop.tv_sec - tv_start.tv_sec) * 1000000LL + (tv_stop.tv_usec - tv_start.tv_usec);
@@ -104,6 +104,6 @@ void time_unsorted_arrays(travel_t *countries, size_t n_c, key_travel_t *key, si
     double fect_time_i = 100.0 - (elapsed_i_k * 100.0) / elapsed_i_c;
     printf("Эффективность таблицы ключей: \n");
     printf("Пaмять - %.1lf от всей таблицы\n", fect_memory);
-    printf("Selection_sort - %.1lf\n", fect_time_b);
-    printf("Merge_sort - %.1lf\n", fect_time_i);
+    printf("Buble_sort - %.1lf\n", fect_time_b);
+    printf("Insert_sort - %.1lf\n", fect_time_i);
 }

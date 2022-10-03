@@ -141,3 +141,63 @@ int merge_sort_by_keys(key_travel_t keys[], size_t l, size_t r)
 
     return EXIT_SUCCESS;
 }
+
+void buble_sort_flag_key(key_travel_t *key, size_t n_key)
+{
+    bool flag = true;
+    key_travel_t buff;
+    for (size_t i = 0; i < n_key; i++)
+    {
+        for (size_t j = i; j < n_key - 1; j++)
+            if (key[j].population > key[j + 1].population)
+            {
+                buff = key[j];
+                key[j] = key[j + 1];
+                key[j + 1] = buff;
+                flag = false;
+            }
+        if (flag)
+            break;
+    }
+}
+void buble_sort_flag_table(travel_t *countries, size_t n_countries)
+{
+    travel_t buff;
+    bool flag = true;
+    for (size_t i = 0; i < n_countries; i++)
+    {
+        for (size_t j = i; j < n_countries - 1; j++)
+            if (countries[j].main_data_t.population > countries[j + 1].main_data_t.population)
+            {
+                buff = countries[j];
+                countries[j] = countries[j + 1];
+                countries[j + 1] = buff;
+                flag = false;
+            }
+        if (flag)
+            break;
+    }
+}
+
+void insert_sort_table(travel_t *countries, size_t n_countries)
+{
+    for (size_t i = 1; i < n_countries; i++)
+    {
+        travel_t buff = countries[i];
+        int j = i - 1;
+        for (; j >= 0 && countries[j].main_data_t.population > buff.main_data_t.population; j--)
+            countries[j + 1] = countries[j];
+        countries[j + 1] = buff;
+    }
+}
+void insert_sort_key(key_travel_t *key, size_t n_key)
+{
+    for (size_t i = 1; i < n_key; i++)
+    {
+        key_travel_t buff = key[i];
+        int j = i - 1;
+        for (; j >= 0 && key[j].population > buff.population; j--)
+            key[j + 1] =key[j];
+        key[j + 1] = buff;
+    }
+}

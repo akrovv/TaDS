@@ -29,9 +29,6 @@ int main(int argc, char **argv)
         print_add_err(rc);
         return rc;
     }
-    printf("%d\n", countries[len - 2].tourism.tourism_beach);
-    printf("%d\n", countries[len - 2].tourism.tourism_sightseeing);
-    printf("%d\n", countries[len - 2].tourism.tourism_sport);
     size_t option = 1;
 
     print_task();
