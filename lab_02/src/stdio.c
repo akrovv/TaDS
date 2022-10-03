@@ -354,12 +354,12 @@ void print_table(travel_t countries[], size_t len)
         }
         else if (countries[i].tourism.tourism_beach)
         {
-            printf("Вид туризма: Спортивный\n");
+            printf("Вид туризма: Пляжный\n");
             print_travel_beach(&countries[i].tourism.kid_tourism.beach);
         }
         else if (countries[i].tourism.tourism_sport)
         {
-            printf("Вид туризма: Пляжный\n");
+            printf("Вид туризма: Спортивный\n");
             print_travel_sport(&countries[i].tourism.kid_tourism.sport);
         }
         printf("---------------------------------------------\n");

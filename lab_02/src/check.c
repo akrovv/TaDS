@@ -56,7 +56,7 @@ bool is_correct_type_sightseeing(char str[])
 
 bool is_correct_type_sport(char str[])
 {
-    char kind_sport[KIND_SPORT * 3][STRING_SPORT] = {"горные лыжи", "серфинг", "восхождения", "Горные лыжи", "Серфинг", "Восхождения"};
+    char kind_sport[KIND_SPORT * 3][STRING_SPORT] = {"горные лыжи", "серфинг", "восхождение", "Горные лыжи", "Серфинг", "Восхождение"};
     for (size_t i = 0; i <  NUMBER_SIGHSEENG * 2; i++)
         if (strcmp(kind_sport[i], str) == 0)
             return true;
