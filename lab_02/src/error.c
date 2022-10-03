@@ -113,10 +113,22 @@ void print_add_err(int rc)
             printf("\nОшибка: Не удается найти файл.");
             break;
         case ERROR_NAME_OBJECT:
-            printf("\nОшибка: Строка с основным видом не содержит (история, искусство, ирирода).");
+            printf("\nОшибка: Строка с основным видом не содержит (история, искусство, природа).");
             break;
         case ERROR_TYPE_SPORT:
             printf("\nОшибка: Строка с видом спорта не содержит (горные лыжи, серфинг, восхождения).");
+            break;
+        case NOT_TEST:
+            printf("\nОшибка: Строка с тестом пцр не подходит по формату (либо 0, либо 1).");
+            break;
+        case MAIN_SEASON_ERROR:
+            printf("\nОшибка: В основном месяце месяцев больше 12.");
+            break;
+        case STRUCT_OVERFLOW:
+            printf("\nОшибка: Таблица переполнена.");
+            break;
+        case SAME_NAME:
+            printf("\nОшибка: Эта страна уже есть в таблице.");
             break;
     }
 }

@@ -50,5 +50,10 @@ void print_add_err(int rc);
 #define FILE_NOT_FOUND 38
 
 #define NOT_FIND 41
+// NEW
+#define NOT_TEST 42
+#define MAIN_SEASON_ERROR 43
+#define STRUCT_OVERFLOW 44
+#define SAME_NAME 45
 
 #endif

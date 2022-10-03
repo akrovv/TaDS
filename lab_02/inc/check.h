@@ -10,5 +10,6 @@ bool is_correct_materic(char str[]);
 bool is_incorrect_symb(char str[]);
 bool is_correct_type_sightseeing(char str[]);
 bool is_correct_type_sport(char str[]);
+bool is_previous(travel_t countries[], travel_t *country, size_t len);
 
 #endif

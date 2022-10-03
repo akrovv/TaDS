@@ -12,6 +12,8 @@ void print_basic_info(travel_t *country);
 void print_travel_sightseeing(sightseeing_t *country);
 void print_travel_beach(beach_t *country);
 void print_travel_sport(sport_t *country);
+void rewrite_data(FILE *f, travel_t *countries, size_t n_countries);
 void print_menu(void);
+void print_task(void);
 
 #endif

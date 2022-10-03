@@ -3,28 +3,6 @@
 #include "check.h"
 
 #define BUFF_SIZE 1000
- 
-char *delete_spaces(char *str)
-{
-    char *res = malloc(strlen(str) * sizeof(char));
-    size_t j = 0;
-    size_t spaces = 0;
-    for (size_t i = 0; str[i] != '\0'; i++)
-    {
-        if (i == spaces && str[i] == ' ')
-            spaces++;
-        else
-        {
-            if (isalpha(str[i]))
-                res[j++] = str[i];
-            if (i > 0 && isalpha(str[i - 1]) && str[i] == ' ')
-                res[j++] = str[i];
-        }
-    }
-    if (res[strlen(res) - 1] == ' ')
-        res[strlen(res) - 1] = '\0';
-    return res;
-}
 
 int split_str_by_rule(char str[], travel_t *country)
 {   
@@ -166,6 +144,8 @@ int split_str_by_rule(char str[], travel_t *country)
                 params = atoi(type_travel);
                 if (params <= 0)
                     return MAIN_SEASON_IS_NEGATIVE;
+                if (params > 12)
+                    return MAIN_SEASON_ERROR;
                 i++;
                 country->tourism.kid_tourism.beach.main_season = params;
             }
@@ -272,7 +252,7 @@ int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countr
 {
     size_t i = 0;
     int rc = EXIT_SUCCESS;
-    while (!feof(f))
+    while (!feof(f) && i < NUMBER_COUNTRY)
     {
         travel_t cur;
         if ((rc = read_str(f, &cur, &split_str_by_rule)))
@@ -281,10 +261,48 @@ int read_array_travel_country(FILE *f, travel_t countries[], size_t *size_countr
         
         i++;
     }
+    
+    if (!feof(f))
+        rc = STRUCT_OVERFLOW;
 
     *size_countries = i;
 
     return rc;
+}
+
+void rewrite_data(FILE *f, travel_t *countries, size_t n_countries)
+{
+    for (int i = 0; i < n_countries; i++)
+    {
+        fprintf(f, "%s;%s;%s;%ld;", countries[i].main_data_t.name_country,
+                countries[i].main_data_t.capital,
+                countries[i].main_data_t.materic,
+                countries[i].main_data_t.population);
+        if (countries[i].covid_tests == true)
+            fprintf(f, "+;");
+        else
+            fprintf(f, "-;");
+
+        if (countries[i].tourism.tourism_sightseeing == false &&
+            countries[i].tourism.tourism_beach == false &&
+            countries[i].tourism.tourism_sport == false)
+            fprintf(f, "-;");
+        else
+        {
+            if (countries[i].tourism.tourism_sightseeing == true)
+                fprintf(f, "Экскурсионный:%u,%s\n", countries[i].tourism.kid_tourism.sightseeing.number_objects,
+                                                  countries[i].tourism.kid_tourism.sightseeing.name_object);
+            else if (countries[i].tourism.tourism_beach == true)
+                fprintf(f, "Пляжный:%hd,%hd,%hd,%hd\n", countries[i].tourism.kid_tourism.beach.main_season,
+                        countries[i].tourism.kid_tourism.beach.air_temperature,
+                        countries[i].tourism.kid_tourism.beach.water_temperature,
+                        countries[i].tourism.kid_tourism.beach.time_flying);
+            else if (countries[i].tourism.tourism_sport == true) {
+                fprintf(f, "Спортивный:%s,%ld\n", countries[i].tourism.kid_tourism.sport.kind_sport,
+                                               countries[i].tourism.kid_tourism.sport.min_count_price);
+            }
+        }
+    }
 }
 
 void fill_keys_array(key_travel_t keys[], travel_t countries[], size_t len)
@@ -385,4 +403,18 @@ void print_menu(void)
            "0 - Выйти                                            Экскурсионный,Пляжный,Спортивный\n"
            "                                                   - Название для ввидов спортивного туризма\n"
            "                                                      не больше 40 элементов\n");
+}
+
+void print_task(void)
+{
+    printf("-------------------Задание 2 ТиСД--------------------------\n"
+           "Ввести список стран, в которых можно отдохнуть, содержащий\n"
+           "название страны, количество жителей, столицу, материк,\n"
+           "нужна ли прививка или ПЦР, основной вид туризма\n"
+           "(экскурсионный - количество объектов, основной вид (природа,\n"
+           "история, искусство); пляжный – основной сезон, температура\n"
+           "воздуха и воды, время полета до страны; спортивный – вид\n"
+           "спорта (горные лыжи, серфинг, восхождения), минимальная\n"
+           "стоимость отдыха,). Вывести список стран на выбранном\n"
+           "материке, где можно заняться указанным видом спорта.\n\n");
 }
