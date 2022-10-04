@@ -504,7 +504,7 @@ int main(int argc, char **argv)
                             if (sport[strlen(sport) - 1] == '\n')
                                     sport[strlen(sport) - 1] = '\0';
                             if (is_situated_digit_value(sport))
-                                ;
+                                rc = SPORT_DIGIT_ERROR;
                             else
                                 if (!find_country_by_sport(countries, len, materics[find_option], sport))
                                     printf("Ни одной страны не было найдено!\n");

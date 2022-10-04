@@ -130,6 +130,8 @@ void print_add_err(int rc)
         case SAME_NAME:
             printf("\nОшибка: Эта страна уже есть в таблице.");
             break;
+        case SPORT_DIGIT_ERROR:
+            printf("\nОшибка: В спорте содержатся цифры.");
     }
 }
 

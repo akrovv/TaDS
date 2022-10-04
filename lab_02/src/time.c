@@ -8,15 +8,15 @@
 
 void make_table(void)
 {
-    printf("+--------+--------+-------------------+-------------------+--------------+--------+\n");
-    printf("| %6s | %6s | %12s | %12s | %12s | %6s |\n", "I", "Размер","Размер 1 эл-та(б)", "Размер массива(б)", "BUBLE FLAG", "INSERT");
-    printf("+--------+--------+-------------------+-------------------+--------------+--------+\n");
+    printf("+--------+---------------+-------------------+-------------------+---------------------+-----------+\n");
+    printf("| %6s | %6s | %12s | %12s | %20s   |%6s|\n", "I", "Длина массива","Размер 1 эл-та(б)", "Размер массива(б)", "BUBLE FLAG(мкс)", "INSERT(мкс)");
+    printf("+--------+---------------+-------------------+-------------------+---------------------+-----------+\n");
 }
 
 void make_data(int i, size_t size, size_t count_size_array, size_t one_element, int64_t time_1, int64_t time_2)
 {
-    printf("| %6d | %6zu | %17zu | %17zu | %12" PRId64 " | %6" PRId64 " |\n", i, size, one_element, count_size_array,  time_1, time_2);
-    printf("+--------+--------+-------------------+-------------------+--------------+--------+\n");
+    printf("| %6d |    %6zu     | %17zu | %17zu | %16" PRId64 "    | %6" PRId64 "    |\n", i, size, one_element, count_size_array,  time_1, time_2);
+    printf("+--------+---------------+-------------------+-------------------+---------------------+-----------+\n");
 }
 
 void my_cpy_st_travel(travel_t *arr_cp, travel_t *arr_src, size_t n, int repeat)
@@ -103,7 +103,7 @@ void time_unsorted_arrays(travel_t *countries, size_t n_c, key_travel_t *key, si
     double fect_time_b = 100.0 - (elapsed_b_k * 100.0) / elapsed_b_c;
     double fect_time_i = 100.0 - (elapsed_i_k * 100.0) / elapsed_i_c;
     printf("Эффективность таблицы ключей: \n");
-    printf("Пaмять - %.1lf от всей таблицы\n", fect_memory);
-    printf("Buble_sort - %.1lf\n", fect_time_b);
-    printf("Insert_sort - %.1lf\n", fect_time_i);
+    printf("Пaмять - %.1lf%% от всей таблицы\n", fect_memory);
+    printf("Buble_sort - %.1lf%% эффективнее сортировки таблицы\n", fect_time_b);
+    printf("Insert_sort - %.1lf%% эффективнее сортировки таблицы\n", fect_time_i);
 }
