@@ -3,7 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "utils.h"
 
-int mult_matrix(int **matrix1, size_t n, size_t m, int **matrix2, size_t n1, size_t m1);
+int mult_matrix(usual_matrix_t *matrix1, usual_matrix_t *matrix2);
 
 #endif 
