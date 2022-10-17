@@ -21,6 +21,9 @@ int create_special_matrix(special_matrix_t *special_vector, usual_matrix_t *matr
 size_t get_zero_element(int **matrix, size_t n, size_t m);
 int allocate_special_matrix(special_matrix_t *special_matrix);
 int allocate_special_vector(special_vector_column_t *special_vector);
+void free_special_matrix(special_matrix_t *special_matrix);
+void free_special_vector(special_vector_column_t *special_vector);
+void auto_fill(usual_matrix_t *matrix, int non_zero_el);
 
 // Print
 void print_usual_matrix(usual_matrix_t *matrix);

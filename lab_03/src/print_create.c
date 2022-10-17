@@ -192,6 +192,24 @@ int read_special_vector_column_element(int **matrix, size_t n, int non_zero_el)
     return 0;
 }
 
+void auto_fill(usual_matrix_t *matrix, int non_zero_el)
+{
+    for (int i = 0; i < matrix->n; i++)
+        for (int j = 0; j < matrix->m; j++)
+            matrix->matrix[i][j] = 0;
+    for (int i = 0, ii = 0, jj = 0, el = 0; i < non_zero_el;)
+    {
+        ii = rand() % matrix->n;
+        jj = rand() % matrix->m;
+        el = 1 + rand() % MAX_NUMBER;
+        if (matrix->matrix[ii][jj] == 0 && el != 0)
+        {
+            matrix->matrix[ii][jj] = el;
+            i++;
+        }
+    }
+}
+
 int create_special_matrix(special_matrix_t *special_matrix, usual_matrix_t *matrix)
 {
     int rc = EXIT_SUCCESS;
@@ -311,8 +329,7 @@ void print_main_menu(void)
            "1 - Ввести матрицу\n"
            "2 - Ввести вектор-стоблец\n"
            "3 - Умножить матрицу на вектор\n"
-           "4 - Вывести матрицы и вектор\n"
-           "5 - Замерить эффективность\n"
+           "4 - Замерить эффективность\n"
            "0 - Выход\n");
 }
 

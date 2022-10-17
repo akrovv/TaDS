@@ -1,6 +1,7 @@
 #include "utils.h"
 #include "pcio.h"
 #include "mult.h"
+#include "measure.h"
 
 int main(void)
 {
@@ -24,7 +25,7 @@ int main(void)
     result.m = 0;
 
     special_matrix_t sp_matrix;
-    special_vector_column_t sp_vector_column; // sp_result;
+    special_vector_column_t sp_vector_column, sp_result;
 
     while (scanf("%d", &menu) == 1 && menu)
     {
@@ -137,12 +138,28 @@ int main(void)
                 }
                 
                 break;
-            case MULTIPLICATION_MATRIX_BY_VECTOR:
-                break;
             case MULTIPLICATION_MATRIX:
-                // mult_matrix(&matrix1, &matrix2);
+                if (vector_column.n == 0 || vector_column.m == 0)
+                    printf("\n Вектор-столбец не введен!");
+                if (matrix.n == 0 || matrix.m == 0)
+                    printf("\n Матрица не введена");
+                if (vector_column.n > 0 && vector_column.m > 0 &&
+                    matrix.n > 0 && matrix.m > 0)
+                {
+                    int rc_multi = mult_matrix(&result, &matrix, &vector_column);
+                    if (rc_multi == 0)
+                    {
+                        mult_special_matrix(&sp_result, &sp_matrix, &sp_vector_column);
+                        printf("\nРезультат умножение обычных матриц:\n");
+                        print_usual_matrix(&result);
+                        printf("Результат умножение разряженных матриц:");
+                        print_special_vector(&sp_result);
+                    } else
+                        printf("\nПри таких размерах матрицу на вектор нельзя умножить:\n");
+                }
                 break;
             case PERF_EVALUATION:
+                perf_eval();
                 break;
         }
 

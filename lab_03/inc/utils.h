@@ -5,13 +5,15 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <inttypes.h>
 
 #define MIN_N 1
 #define MAX_N 5000
 #define MIN_M MIN_N
 #define MAX_M MAX_N
+#define MAX_NUMBER 200
 
-typedef enum { INPUT_MATRIX = 1, INPUT_VECTOR, MULTIPLICATION_MATRIX_BY_VECTOR, MULTIPLICATION_MATRIX, PERF_EVALUATION } menu_t;
+typedef enum { INPUT_MATRIX = 1, INPUT_VECTOR, MULTIPLICATION_MATRIX, PERF_EVALUATION } menu_t;
 
 typedef struct
 {

@@ -4,12 +4,12 @@ OUT_DIR := ./out
 
 CC := gcc
 C_VERSION := 99
-CFLAGS := -std=c$(C_VERSION) -Wall -Werror -pedantic -I$(INC_DIR)
+CFLAGS := -std=c$(C_VERSION) -pedantic -I$(INC_DIR)
 
 FTESTS_DIR := ./func_tests/scripts
 UTESTS_DIR := ./unit_tests
 
-OBJS_ALL := $(OUT_DIR)/main.o $(OUT_DIR)/print_create.o $(OUT_DIR)/multiplication.o
+OBJS_ALL := $(OUT_DIR)/main.o $(OUT_DIR)/print_create.o $(OUT_DIR)/multiplication.o $(OUT_DIR)/measure_time.o
 OBJS_MAIN := $(OUT_DIR)/main.o
 
 app.exe: $(OBJS_MAIN) $(OBJS_ALL)
