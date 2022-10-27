@@ -15,21 +15,6 @@ char pop_array(stack_array_t *stack)
     stack->size_stack--;
     return stack->string[stack->size_stack];
 }
-// 2 - 3 - 2
-// 2 + + 3
-/*
-2+3
-// 2+3-3-3+2-5+9
-// - - - + - +
-2-3-3-3+2-5+9
-9 5 2 3 3 3 2
-+ - + - - - +
-
-3
-+
-2
-
-*/
 
 int calc_expr(stack_array_t *stack, int *error, size_t count_num, size_t count_sign)
 {

@@ -12,6 +12,8 @@
 #define SIZE_STACK 1001
 #define BUFF_SIZE 8
 
+#define I_STEP 1000
+
 typedef enum { ADD = 1, RM, CALC } option_t;
 
 typedef struct
