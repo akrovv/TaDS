@@ -41,6 +41,55 @@ int copy_stack_array(stack_array_t *copy, stack_array_t *den)
     return EXIT_SUCCESS;
 }
 
+stack_list_t *copy_stack_list_t(stack_list_t *den)
+{
+    stack_list_t *tail = NULL, *head = NULL, *current = den;
+    while (current != NULL)
+    {
+        if (head == NULL)
+        {
+            head = (stack_list_t *) malloc(sizeof(stack_list_t));
+            head->size_stack = current->size_stack;
+            head->symb = current->symb;
+            head->next = NULL;
+            tail = head;
+        } else
+        {
+            tail->next = (stack_list_t *) malloc(sizeof(stack_list_t));
+            tail = tail->next;
+            tail->size_stack = current->size_stack;
+            tail->symb = current->symb;
+            tail->next = NULL;
+        }
+        current = current->next;
+    }
+    return head;
+}
+
+int print_stack_list_t(stack_list_t *stack_head)
+{
+    int rc = EXIT_SUCCESS;
+    if(stack_head == NULL)
+        return EXIT_FAILURE;
+    else
+    {
+        stack_list_t copy_stack, *copy_list = &copy_stack;
+        stack_list_t *head;
+        copy_list = copy_stack_list_t(stack_head);
+        printf("\nТекущее состояние стека, реализованного при помощи списка:\n");
+        for (; copy_list->next; copy_list = head)
+        {
+            head = copy_list->next;
+            printf("Адресс элемента: %p\n", (void*)copy_list);
+            printf("Значение элемента: %c\n", copy_list->symb);
+            (void) pop_list(&copy_list);
+        }
+        printf("Адресс элемента: %p\n", (void*)copy_list);
+        printf("Значение элемента: %c\n", copy_list->symb);
+    }
+    return rc;
+}
+
 int print_stack_array(stack_array_t *stack)
 {
     stack_array_t copy_stack;
@@ -364,6 +413,23 @@ int main(void)
                     }
                     printf("Результат выражения: %d\n", result);
                 }
+            }
+        }
+        else if (option == 10)
+        {
+            if (!is_stack_list_create)
+                printf("Стек еще не создан!\n");
+            else
+            {
+                if (!stack_list->next)
+                    printf("Стек пуст!\n");
+                else
+                    if (print_stack_list_t(stack_list) == EXIT_FAILURE)
+                    {
+                        free_all(stack_list, &stack_array);
+                        show_error(PRINT_ERROR);
+                        return PRINT_ERROR;
+                    }
             }
         }
 
