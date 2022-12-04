@@ -2,6 +2,7 @@
 #include "operations.h"
 #include "menu.h"
 #include "read.h"
+#include "paint.h"
 
 int main(void)
 {
@@ -9,27 +10,11 @@ int main(void)
     int menu;
     
     binary_tree.head = NULL;
-    // char *hey = "hello_world";
-    // char *boy = "boy";
-    // char *zopa = "zopa";
-    // char *big_zopa = "big_zopa";
-    // char *big_zopa1 = "doy";
-
-    // insert(&binary_tree.head, hey);
-    // insert(&binary_tree.head, boy);
-    // insert(&binary_tree.head, zopa);
-    // insert(&binary_tree.head, big_zopa);
-    // insert(&binary_tree.head, big_zopa1);
-
-    //printf("FIND: %zu\n", get_quantity_by_letter(binary_tree.head, 'a'));
-
-    //deleteValue(binary_tree.head, boy);
-  //  print_tree(binary_tree.head);
-
+  
     print_main_menu();
     printf("Выбор: ");
 
-    while (scanf("%d", &menu) == 1 && menu > 0 && menu < 7)
+    while (scanf("%d", &menu) == 1 && menu > 0 && menu < 9)
     {
         if (menu == 1)
         {
@@ -39,32 +24,72 @@ int main(void)
         {
             char str[MAX_LEN];
             size_t byle_len = 0;
+            printf("Введите слово, которое нужно добавить: ");
+            scanf("%s", str);
+    
+            if (str[strlen(str) - 1] == '\n')
+                str[strlen(str) - 1] = '\0';
+            printf("%s\n", str);
+            insert(&binary_tree.head, str);
+        }
+        else if (menu == 3)
+        {
+            char str[MAX_LEN];
+            size_t byle_len = 0;
             printf("Введите слово, которое нужно удалить: ");
             scanf("%s", str);
     
             if (str[strlen(str) - 1] == '\n')
                 str[strlen(str) - 1] = '\0';
             printf("%s\n", str);
-            deleteValue(binary_tree.head, str);
-        }
-        else if (menu == 3)
-        {
-            char letter = 'b'; 
-            printf("Введите одну букву: ");
 
-            printf("Найдено: \"%zu\"\n", get_quantity_by_letter(binary_tree.head, letter));
-            
+            deleteValue(binary_tree.head, str);
         }
         else if (menu == 4)
         {
-            print_tree(binary_tree.head);
+            char letter = 'd'; 
+            printf("Введите одну букву: ");
+
+            printf("Найдено: \"%zu\"\n", get_quantity_by_letter(binary_tree.head, letter));
+
+            FILE *f = fopen("./data/graph.gv", "w");
+            treeExportToDot(f, "graph_bin", binary_tree.head, HIGHLIGHT, letter);
+            fclose(f);
+            system("./make_graph.sh");
+            printf("Дерево визуализировано!\n");
         }
         else if (menu == 5)
         {
-            sort(binary_tree.head);
+            int option;
+            printf("Визуализировать дерево? (0 - Нет, 1 - Да): ");
+            if (scanf("%d", &option) != 1 || option < 0 || option > 1)
+                return EXIT_FAILURE;
+            
+            if (option)
+            {
+                FILE *f = fopen("./data/graph.gv", "w");
+                treeExportToDot(f, "graph_bin", binary_tree.head, BST, 0);
+                fclose(f);
+                system("./make_graph.sh");
+                printf("Дерево визуализировано!\n");
+            }
+            else
+                print_tree(binary_tree.head);
         }
         else if (menu == 6)
-        {}
+        {
+            char s[100] = "doy";
+            printf("%s\n", getNodeByValue(binary_tree.head, s)->word);
+        }
+        else if (menu == 7)
+        {
+
+
+        }
+        else if (menu == 8)
+        {
+            
+        }
         else
             break;
 

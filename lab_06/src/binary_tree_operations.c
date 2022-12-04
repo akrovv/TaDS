@@ -68,7 +68,6 @@ branch_t *getNodeByValue(branch_t *root, char *value)
             root = root->left;
             continue;
         } else if (comparator(root->word, value) < 0) {
-
             root = root->right;
             continue;
         } else {
