@@ -4,7 +4,7 @@ OUT_DIR := ./out
 
 CC := gcc
 C_VERSION := 99
-CFLAGS := -std=c$(C_VERSION) -Werror -pedantic -I$(INC_DIR)
+CFLAGS := -std=gnu$(C_VERSION) -Werror -pedantic -I$(INC_DIR)
 
 FTESTS_DIR := ./func_tests/scripts
 UTESTS_DIR := ./unit_tests

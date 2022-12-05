@@ -178,9 +178,11 @@ int main(void)
         {
             if (binary_tree.head)
             {
+                char buffer[BUFF_SIZE];
                 char word[SIZE];
 
                 printf("Введите слово: ");
+                fgets(buffer, BUFF_SIZE, stdin);
 
                 if (fgets(word, SIZE, stdin) == NULL)
                     return EXIT_FAILURE;

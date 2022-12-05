@@ -157,13 +157,3 @@ void print_tree(branch_t *head)
         print_tree(head->right);
 }
 
-void sort(branch_t *head)
-{
-    if (head->left)
-        sort(head->left);
-    printf("%s\n", head->word);
-    if (head->right)
-        sort(head->right);
-}
-
-
