@@ -9,6 +9,12 @@
 
 #define BUFF_SIZE 8
 
+#define SCANF_ERROR 1
+#define OUT_OF_RANGE 2
+#define EXTRA_LETTERS 3
+#define FIND_MENU 4
+#define PRINT_MENU 5
+
 typedef struct branch
 {
     char *word;

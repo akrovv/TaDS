@@ -5,25 +5,39 @@
 #include "paint.h"
 #include "measure.h"
 
-// static print_error(int rc)
-// {
-//     switch (rc)
-//     {
-//         case 
-//     }
-// }
+static void print_error(int rc)
+{
+    switch (rc)
+    {
+        case SCANF_ERROR:
+            printf("Ошибка! При чтении пункта меню произошла ошибка.\n");
+            break;
+        case OUT_OF_RANGE:
+            printf("Ошибка! Выход за допустимые значения меню (0 - 7)\n");
+            break;
+        case EXTRA_LETTERS:
+            printf("Ошибка! Была введена не буква.\n");
+            break;
+        case FIND_MENU:
+            printf("Ошибка! Выход за допустимые значения меню поиска (0 - 1)\n");
+            break;
+        case PRINT_MENU:
+            printf("Ошибка! Выход за допустимые значения меню вывода (0 - 1)\n");
+            break;
+    }
+}
 
 int main(void)
 {
     binary_tree_t binary_tree;
-    int menu;
+    int menu = 1;
     
     binary_tree.head = NULL;
   
     print_main_menu();
     printf("Выбор: ");
 
-    while (scanf("%d", &menu) == 1 && menu > 0 && menu < 10)
+    while (scanf("%d", &menu) == 1 && menu > 0 && menu < 8)
     {
         if (menu == 1)
         {
@@ -80,20 +94,41 @@ int main(void)
         {
             if (binary_tree.head)
             {
+                char letters[SIZE];
                 char letter; 
                 char buffer[BUFF_SIZE];
                 int menu;
                 printf("Введите одну букву: ");
                 fgets(buffer, BUFF_SIZE, stdin);
 
-                if (scanf("%c", &letter) != 1)
+                if (fgets(letters, SIZE, stdin) == NULL)
                     return EXIT_FAILURE;
+
+                if (letters[strlen(letters) - 1] == '\n')
+                    letters[strlen(letters) - 1] = '\0';
+
+                if (strlen(letters) > 1)
+                {
+                    print_error(EXTRA_LETTERS);
+                    return EXTRA_LETTERS;
+                }
+
+                letter = letters[0];
 
                 printf("Найдено: \"%zu\"\n", get_quantity_by_letter(binary_tree.head, letter));
 
                 printf("Покрасить узлы, в которах найдена буква? (0 - Нет, 1 - Да): ");
-                if (scanf("%d", &menu) != 1 || menu > 1 || menu < 0)
-                    return EXIT_FAILURE;
+                if (scanf("%d", &menu) != 1)
+                {
+                    print_error(SCANF_ERROR);
+                    return SCANF_ERROR;
+                }
+                
+                if (menu < 0 || menu > 1)
+                {
+                    print_error(FIND_MENU);
+                    return FIND_MENU;
+                }
                 
                 if (menu == 1)
                 {
@@ -114,7 +149,16 @@ int main(void)
             {
                 printf("Визуализировать дерево? (0 - Нет, 1 - Да): ");
                 if (scanf("%d", &option) != 1 || option < 0 || option > 1)
-                    return EXIT_FAILURE;
+                {
+                    print_error(SCANF_ERROR);
+                    return SCANF_ERROR;
+                }
+
+                if (option < 0 || option > 1)
+                {
+                    print_error(PRINT_MENU);
+                    return PRINT_MENU;
+                }
                 
                 if (option)
                 {
@@ -134,8 +178,18 @@ int main(void)
         {
             if (binary_tree.head)
             {
-                char s[100] = "doy";
-                branch_t *result = getNodeByValue(binary_tree.head, s);
+                char word[SIZE];
+
+                printf("Введите слово: ");
+
+                if (fgets(word, SIZE, stdin) == NULL)
+                    return EXIT_FAILURE;
+
+                if (word[strlen(word) - 1] == '\n')
+                    word[strlen(word) - 1] = '\0';
+
+                branch_t *result = getNodeByValue(binary_tree.head, word);
+
                 if (result)
                     printf("%s\n", result->word);
                 else
@@ -145,21 +199,21 @@ int main(void)
                 printf("Дерево еще не считано!\n");
         }
         else if (menu == 7)
-        {
-
-
-        }
-        else if (menu == 8)
-        {
-            
-        }
-        else if (menu == 9)
-        {
             measure_find();
-        }
 
         print_main_menu();
         printf("Выбор: ");
+    }
+
+    if (menu)
+    {
+        print_error(SCANF_ERROR);
+        return SCANF_ERROR;
+    }
+    else if (menu > 7 || menu < 0)
+    {
+        print_error(OUT_OF_RANGE);
+        return OUT_OF_RANGE;
     }
     
     return EXIT_SUCCESS;
