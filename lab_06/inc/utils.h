@@ -7,6 +7,8 @@
 #include <string.h>
 #define _GNU_SOURCE
 
+#define BUFF_SIZE 8
+
 typedef struct branch
 {
     char *word;

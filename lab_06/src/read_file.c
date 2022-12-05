@@ -19,9 +19,8 @@ static int str_read(binary_tree_t *binary_tree, FILE *f)
     return EXIT_SUCCESS;
 }
 
-int file_read(binary_tree_t *binary_tree)
+int file_read(binary_tree_t *binary_tree, FILE *f)
 {
-    FILE *f = fopen("test.txt", "r");
     if (!f)
         return EXIT_FAILURE;
 

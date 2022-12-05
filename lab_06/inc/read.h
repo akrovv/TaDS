@@ -6,6 +6,6 @@
 
 #define MAX_LEN 200
 
-int file_read(binary_tree_t *binary_tree);
+int file_read(binary_tree_t *binary_tree, FILE *f);
 
 #endif

@@ -9,7 +9,7 @@ CFLAGS := -std=c$(C_VERSION) -Werror -pedantic -I$(INC_DIR)
 FTESTS_DIR := ./func_tests/scripts
 UTESTS_DIR := ./unit_tests
 
-OBJS_ALL := $(OUT_DIR)/binary_tree_operations.o $(OUT_DIR)/menu.o $(OUT_DIR)/read_file.o
+OBJS_ALL := $(OUT_DIR)/binary_tree_operations.o $(OUT_DIR)/menu.o $(OUT_DIR)/read_file.o $(OUT_DIR)/paint_tree.o $(OUT_DIR)/measure_tree.o
 OBJS_MAIN := $(OUT_DIR)/main.o
 
 app.exe: $(OBJS_MAIN) $(OBJS_ALL)
